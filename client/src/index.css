@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+#searchContainer {
+  width: 100%;
+  height:4vh;
+}
+#search {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0px;
+}
+
+#loginPanel {
+  height: 400px;
+}
+
+#loginButton {
+  bottom: 20px;
+}
