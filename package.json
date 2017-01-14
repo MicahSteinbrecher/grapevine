@@ -1,7 +1,7 @@
 {
-  "name": "lookup-server",
-  "version": "0.0.1",
-  "private": true,
+  "name": "Grapevine",
+  "version": "2.0.0",
+  "author":"Micah Steinbrecher",
   "babel": {
     "presets": [
       "es2015",
