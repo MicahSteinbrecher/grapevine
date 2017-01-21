@@ -38,14 +38,15 @@ const LoginControl = React.createClass({
         }(document, 'script', 'facebook-jssdk'));
     },
 
-    testAPI: function () {
+    testAPI: function (authData) {
         console.log('Welcome!  Fetching your information.... ');
         FB.api('/me', function (response) {
             console.log('Successful login for: ' + response.name);
             document.getElementById('status').innerHTML =
                 'Thanks for logging in, ' + response.name + '!';
         });
-        this.setState({authenticated: true});
+        this.setState({authenticated: true,
+                        auth: authData});
     },
 
     statusChangeCallback: function (response) {
@@ -53,7 +54,7 @@ const LoginControl = React.createClass({
         console.log(response);
 
         if (response.status === 'connected') {
-            this.testAPI();
+            this.testAPI(response.authResponse);
         } else if (response.status === 'not_authorized') {
             // The person is logged into Facebook, but not your app.
             document.getElementById('status').innerHTML = 'Please log ' +
@@ -81,7 +82,7 @@ const LoginControl = React.createClass({
             )
         } else {
             return (
-                <App />
+                <App auth={this.state.auth}/>
             )
         }
     }

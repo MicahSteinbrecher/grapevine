@@ -1,25 +1,63 @@
-const express = require('express');
-
-const app = express();
-
-app.set('port', (process.env.PORT || 3001));
+var EventSearch = require("facebook-events-by-location-core");
+var app = require('express')();
+var session = require('express-session');
+var FileStore = require('session-file-store')(session);
+app.set('trust proxy', true)
+app.use(session({
+    name: 'server-session-cookie-id',
+    secret: 'my express secret',
+    proxy: true,
+    saveUninitialized: true,
+    resave: true,
+    store: new FileStore()
+}));
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+    app.use(express.static('client/build'));
 }
 
+app.use(function printSession(req, res, next) {
+    console.log('req.session', req.session);
+    return next();
+});
+
+app.get('/set/location', (req, res) => {
+    if ((typeof req.query.lat === 'undefined') || (typeof req.query.lng === 'undefined')) {
+        return res.end('no location');
+    } else {
+        req.session.location = {
+            lat: req.query.lat,
+            lng: req.query.lng
+        }
+        res.sendStatus(200);
+    }
+});
 
 app.get('/api/events', (req, res) => {
-
-  if (!param) {
-    res.status(400).send({status: "failure", error: "query empty"})
-    return;
-  } else {
-      res.status(200).send({status: "success"});
-  }
-
+    // var es = new EventSearch({
+    //     "lat": req.session.lat,
+    //     "lng": req.session.lng,
+    //     'accessToken': req.query.accessToken,
+    // });
+    //
+    // es.search().then(function (events) {
+    //     console.log(JSON.stringify(events, null, 4));
+    //         res.json({
+    //             events: 'success',
+    //         });
+    //         return;
+    // }).catch(function (error) {
+    //     console.error(JSON.stringify(error));
+    //     res.json({
+    //         error: 'Missing required parameter `q`',
+    //     });
+    //     return;
+    // });
+    return res.end('test')
 });
+
+app.set('port', (process.env.PORT || 3001));
 
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console

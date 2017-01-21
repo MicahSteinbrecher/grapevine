@@ -1,6 +1,20 @@
 /* eslint-disable no-undef */
-function search(query, cb) {
-    return fetch(`api/events?q=${query}`, {
+export const GetEvents = (data, cb) => {
+    console.log('searching...');
+    console.log(data);
+    return fetch(`api/events?q=${data.value}&accessToken=${data.auth.accessToken}`, {
+        credentials: 'same-origin',
+        accept: 'application/json',
+    }).then(checkStatus)
+        .then(parseJSON)
+        .then(cb);
+}
+
+export const SetLocation = (location, cb) => {
+    console.log('setting location...');
+    console.log(location);
+    return fetch(`set/location?lat=${location.lat}&lng=${location.lng}`, {
+        credentials: 'same-origin',
         accept: 'application/json',
     }).then(checkStatus)
         .then(cb);
@@ -18,5 +32,6 @@ function checkStatus(response) {
     }
 }
 
-const Client = { search };
-export default Client;
+function parseJSON(response) {
+    return response.json();
+}

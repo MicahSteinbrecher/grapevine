@@ -1,7 +1,8 @@
 import React from 'react';
+import {SetLocation} from './Client';
 import {Gmaps, Marker, InfoWindow} from 'react-gmaps';
 
-const coords = {
+var coords = {
     lat: 40.730610,
     lng: -73.935242
 };
@@ -14,6 +15,12 @@ const Map = React.createClass({
                 map.setCenter({
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
+                });
+                SetLocation({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                }, (result) => {
+                    console.log('saved location');
                 });
             });
         }

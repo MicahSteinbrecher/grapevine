@@ -1,5 +1,5 @@
 import React from 'react';
-import Client from './Client';
+import {GetEvents} from './Client';
 import './index.css';
 import './semantic-ui/semantic.min.css';
 
@@ -12,9 +12,6 @@ const Search = React.createClass({
     },
     handleSearchChange: function (e) {
         const value = e.target.value;
-        this.setState({
-            searchValue: value,
-        });
 
         if (value === '') {
             this.setState({
@@ -22,11 +19,7 @@ const Search = React.createClass({
                 showRemoveIcon: false,
             });
         } else {
-            this.setState({
-                showRemoveIcon: true,
-            });
-
-            Client.search(value, (result) => {
+            GetEvents({auth:this.props.auth, value: value}, (result) => {
                 console.log(result);
             });
         }

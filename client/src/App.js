@@ -11,7 +11,7 @@ const App = React.createClass({
         return (
             <div>
                 <Map />
-                <Search />
+                <Search auth={this.props.auth}/>
             </div>
         );
     }
