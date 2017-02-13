@@ -2,7 +2,7 @@
 export const GetEvents = (data, cb) => {
     console.log('searching...');
     console.log(data);
-    return fetch(`api/events?q=${data.value}&accessToken=${data.auth.accessToken}`, {
+    return fetch(`get/events?q=${data.value}&accessToken=${data.auth.accessToken}`, {
         credentials: 'same-origin',
         accept: 'application/json',
     }).then(checkStatus)

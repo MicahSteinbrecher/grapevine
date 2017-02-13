@@ -10,8 +10,8 @@ const App = React.createClass({
     render() {
         return (
             <div>
-                <Map />
-                <Search auth={this.props.auth}/>
+                <Map events={this.state.events}/>
+                <Search auth={this.props.auth} onClick={() => this.handleClick()}/>
             </div>
         );
     }

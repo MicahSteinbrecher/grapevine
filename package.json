@@ -17,6 +17,7 @@
     "express-session": "^1.14.2",
     "facebook-events-by-location-core": "^0.1.5",
     "fs": "0.0.2",
+    "jshashtable": "^0.1.0",
     "nconf": "^0.8.4",
     "session-file-store": "^1.0.0",
     "sql.js": "^0.3.2"

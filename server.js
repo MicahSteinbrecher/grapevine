@@ -1,4 +1,5 @@
 var EventSearch = require("facebook-events-by-location-core");
+var utilities = require('./utilities')
 var app = require('express')();
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
@@ -34,27 +35,33 @@ app.get('/set/location', (req, res) => {
     }
 });
 
-app.get('/api/events', (req, res) => {
-    // var es = new EventSearch({
-    //     "lat": req.session.lat,
-    //     "lng": req.session.lng,
-    //     'accessToken': req.query.accessToken,
-    // });
-    //
-    // es.search().then(function (events) {
-    //     console.log(JSON.stringify(events, null, 4));
-    //         res.json({
-    //             events: 'success',
-    //         });
-    //         return;
-    // }).catch(function (error) {
-    //     console.error(JSON.stringify(error));
-    //     res.json({
-    //         error: 'Missing required parameter `q`',
-    //     });
-    //     return;
-    // });
-    return res.end('test')
+app.get('/get/events', (req, res) => {
+    var dateConstraint = new Date();
+    dateConstraint.setDate(dateConstraint.getDate()+7);
+    console.log(dateConstraint);
+    var es = new EventSearch({
+        "lat": req.session.location.lat,
+        "lng": req.session.location.lng,
+        'accessToken': req.query.accessToken,
+        'distance': '2500',
+        'sort': 'time',
+        'until': dateConstraint
+    });
+
+    es.search().then(function (events) {
+        console.log(JSON.stringify(events, null, 4));
+        events = utilities.prepareResults(events.events);
+        res.json({
+                'events': events
+            });
+            return;
+    }).catch(function (error) {
+        console.error(JSON.stringify(error));
+        res.json({
+            error: 'Missing required parameter `q`',
+        });
+        return;
+    });
 });
 
 app.set('port', (process.env.PORT || 3001));
