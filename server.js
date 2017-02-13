@@ -51,10 +51,9 @@ app.get('/get/events', (req, res) => {
     es.search().then(function (events) {
         console.log(JSON.stringify(events, null, 4));
         events = utilities.prepareResults(events.events);
-        res.json({
-                'events': events
+        return res.json({
+                'events': events.results,
             });
-            return;
     }).catch(function (error) {
         console.error(JSON.stringify(error));
         res.json({

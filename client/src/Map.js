@@ -1,5 +1,4 @@
 import React from 'react';
-import {SetLocation} from './Client';
 import {Gmaps, Marker, InfoWindow} from 'react-gmaps';
 
 var coords = {
@@ -7,39 +6,20 @@ var coords = {
     lng: -73.935242
 };
 
-const Map = React.createClass({
-
-    onMapCreated(map) {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                map.setCenter({
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                });
-                SetLocation({
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                }, (result) => {
-                    console.log('saved location');
-                });
-            });
-        }
-    },
-
+class Map extends React.Component {
 
     render() {
         return (
             <Gmaps
                 height={'96vh'}
-                lat={coords.lat}
-                lng={coords.lng}
+                lat={this.props.lat}
+                lng={this.props.lng}
                 zoom={12}
-                params={{v: '3.exp', key: 'AIzaSyCnRGJFJHYPNnAJcqRpcAHGjWotJZlKCE4'}}
-                onMapCreated={this.onMapCreated}>
+                params={{v: '3.exp', key: 'AIzaSyCnRGJFJHYPNnAJcqRpcAHGjWotJZlKCE4'}}>
             </Gmaps>
         );
     }
 
-});
+}
 
 export default Map
