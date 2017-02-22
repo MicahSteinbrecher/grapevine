@@ -1,17 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Gmaps, Marker, InfoWindow} from 'react-gmaps';
+import {SetLocation} from './Client';
+
 
 class Map extends React.Component {
     constructor(props) {
         super(props);
-
+        this.state = this.props;
         // This binding is necessary to make `this` work in the callback
-        this.onDrag = this.onDrag.bind(this);
+        this.handleDrag = this.handleDrag.bind(this);
     }
 
-    onDrag(e) {
-        console.log(e);
+    componentWillReceiveProps(nextProps){
+        if (this.props != nextProps){
+            this.state = nextProps;
+        }
+    }
+
+    handleDrag() {
+        var center = this.map.getMap().getCenter();
+        var location = {
+            lat: center.lat(),
+            lng: center.lng()
+        }
+        this.props.onDrag(location);
     }
 
     render() {
@@ -25,11 +38,12 @@ class Map extends React.Component {
             return (
             <Gmaps
                 height={'100vh'}
-                lat={this.props.lat}
-                lng={this.props.lng}
+                lat={this.state.lat}
+                lng={this.state.lng}
                 zoom={13}
                 params={{v: '3.exp', key: 'AIzaSyCnRGJFJHYPNnAJcqRpcAHGjWotJZlKCE4'}}
-                onDrag={this.onDrag}>
+                ref={(map) => { this.map = map; }}
+                onDrag={this.handleDrag}>
                 {markers}
             </Gmaps>
         );

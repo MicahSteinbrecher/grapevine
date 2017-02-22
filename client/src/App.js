@@ -16,6 +16,7 @@ class App extends React.Component {
             events: []
         };
         this.search = this.search.bind(this);
+        this.onDrag = this.onDrag.bind(this);
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -34,10 +35,6 @@ class App extends React.Component {
         }
     }
 
-    getLocation() {
-
-    }
-
     search() {
         GetEvents({auth: this.props.auth}, (result) => {
             console.log(result);
@@ -47,10 +44,23 @@ class App extends React.Component {
         });
     }
 
+    onDrag(center) {
+        this.setState({
+            lat: center.lat,
+            lng: center.lng
+        });
+        SetLocation({
+            lat: this.state.lat,
+            lng: this.state.lng
+        }, (result) => {
+            console.log('saved location');
+        });
+    }
+
     render() {
         return (
             <div>
-                <Map {...this.state}/>
+                <Map {...this.state} onDrag={this.onDrag}/>
                 <Search auth={this.props.auth} search={this.search}/>
             </div>
         );
