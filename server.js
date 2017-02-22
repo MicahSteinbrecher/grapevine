@@ -43,7 +43,7 @@ app.get('/get/events', (req, res) => {
         "lat": req.session.location.lat,
         "lng": req.session.location.lng,
         'accessToken': req.query.accessToken,
-        'distance': '2500',
+        'distance': '8000',
         'sort': 'time',
         'until': dateConstraint
     });

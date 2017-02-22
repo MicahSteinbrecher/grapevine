@@ -4,15 +4,12 @@ body {
   font-family: sans-serif;
 }
 
-#searchContainer {
-  width: 100%;
-  height:4vh;
-}
 #search {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  bottom: 0px;
+  bottom: 130px;
+  right: 0px;
+  background: white;
+
 }
 
 #loginPanel {

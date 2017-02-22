@@ -5,19 +5,14 @@ import './semantic-ui/semantic.min.css';
 
 const Search = React.createClass({
 
-    handleChange: function(e) {
-        this.props.search(e.target.value);
+    handleClick: function(e) {
+        this.props.search();
     },
     render: function () {
         return (
-            <div id="searchContainer" className='ui input'>
-                <input
-                    id='search'
-                    type='text'
-                    placeholder='Search events...'
-                    onChange={this.handleChange}
-                />
-            </div>
+            <button className="ui icon button" id="search" onClick={this.handleClick}>
+                <i className="search icon"></i>
+            </button>
         );
     },
 });

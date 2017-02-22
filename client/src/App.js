@@ -38,15 +38,13 @@ class App extends React.Component {
 
     }
 
-    search(query) {
-        if (!query == '') {
-            GetEvents({auth:this.props.auth, query: query}, (result) => {
-                console.log(result);
-                this.setState({
-                    events: result.events,
-                })
-            });
-        }
+    search() {
+        GetEvents({auth: this.props.auth}, (result) => {
+            console.log(result);
+            this.setState({
+                events: result.events,
+            })
+        });
     }
 
     render() {
