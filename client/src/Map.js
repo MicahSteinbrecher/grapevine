@@ -10,6 +10,7 @@ class Map extends React.Component {
         this.state = this.props;
         // This binding is necessary to make `this` work in the callback
         this.handleDrag = this.handleDrag.bind(this);
+        //this.handleMouseOver = this.handleMouseOver.bind(this);
     }
 
     componentWillReceiveProps(nextProps){
@@ -27,14 +28,34 @@ class Map extends React.Component {
         this.props.onDrag(location);
     }
 
+    // handleMouseOver(e) {
+    //     console.log(e);
+    //     if ('target' in e) {
+    //         this.props.onMouseOver(e);
+    //     }
+    // }
+
     render() {
         var events = this.props.events;
-        var markers = events.map((event) =>
-            <Marker key={event.id}
-                lat={event.venue.location.latitude}
-                lng={event.venue.location.longitude}
-            />
+
+        var icons = {}
+        for (var idx in events){
+            var eventId = events[idx].id;
+            if (eventId == this.props.activeEventId) {
+                icons[eventId]="http://maps.google.com/mapfiles/ms/icons/blue.png";
+            } else {
+                icons[eventId]="http://maps.google.com/mapfiles/ms/icons/red.png";
+            }
+        }
+
+        var markers = events.map((event, index) =>
+            <Marker key={index}
+                    id={event.id}
+                    lat={event.venue.location.latitude}
+                    lng={event.venue.location.longitude}
+                    icon={icons[event.id]} />
         );
+
             return (
             <Gmaps
                 height={'100vh'}

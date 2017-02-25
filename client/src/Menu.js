@@ -9,19 +9,22 @@ class Menu extends React.Component {
 
         // This binding is necessary to make `this` work in the callback
         this.handleMouseOver = this.handleMouseOver.bind(this);
+        this.handleMouseLeave = this.handleMouseLeave.bind(this);
     }
 
     handleMouseOver(e) {
-        if (e.target.id=='menuItem'){
-            console.log('mouse event fired');
-        }
+        this.props.onMouseOver(e);
+    }
+
+    handleMouseLeave(e) {
+        this.props.onMouseLeave(e);
     }
 
     render() {
         var menuItems = '';
         if (this.props.hasOwnProperty("events")) {
             menuItems = this.props.events.map((event) =>
-                <a className="item" id="menuItem" key={event.id}>
+                <a className="item menuItem" id={event.id} name='menuItem' key={event.id}>
                     {event.name}
                 </a>
             );
@@ -29,7 +32,8 @@ class Menu extends React.Component {
         return (
             <div className="ui inverted vertical menu" id="eventPanel"
                  ref={(menu) => { menu = menu; }}
-                 onMouseOver={this.handleMouseOver}>
+                 onMouseOver={this.handleMouseOver}
+                 onMouseLeave={this.handleMouseLeave}>
                 {menuItems}
             </div>
         );
