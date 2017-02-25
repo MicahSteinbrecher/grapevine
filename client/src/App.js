@@ -61,7 +61,7 @@ class App extends React.Component {
         return (
             <div>
                 <Map {...this.state} onDrag={this.onDrag}/>
-                <Search auth={this.props.auth} search={this.search}/>
+                <Search {...this.state} search={this.search}/>
             </div>
         );
     }

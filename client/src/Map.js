@@ -30,7 +30,7 @@ class Map extends React.Component {
     render() {
         var events = this.props.events;
         var markers = events.map((event) =>
-            <Marker
+            <Marker key={event.id}
                 lat={event.venue.location.latitude}
                 lng={event.venue.location.longitude}
             />

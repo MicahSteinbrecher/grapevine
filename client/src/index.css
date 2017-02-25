@@ -4,12 +4,28 @@ body {
   font-family: sans-serif;
 }
 
-#search {
+#searchContainer {
   position: absolute;
-  bottom: 130px;
-  right: 0px;
-  background: white;
+  top: 50px;
+  width: 330px;
+}
 
+#search {
+  background: white;
+}
+
+#eventPanel {
+  width: 300px;
+  overflow: scroll;
+  max-height: 80vh;
+}
+
+#menuItem {
+  height: 50px;
+}
+
+#searchInput{
+  width: 260px;
 }
 
 #loginPanel {
