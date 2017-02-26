@@ -33,7 +33,7 @@ class Menu extends React.Component {
         if (this.props.selectedEventId) {
             var event = '';
             for (var i in events) {
-                if (events[i].id != this.props.selectedEventId) {
+                if (events[i].id == this.props.selectedEventId) {
                     event = events[i];
                     break;
                 }
@@ -43,7 +43,7 @@ class Menu extends React.Component {
         }
         else if (this.props.hasOwnProperty("events")) {
             var eventList = events.map((event) =>
-                <a className="item menuItem" id={event.id} name='menuItem' key={event.id} >
+                <a className="item menuItem" id={event.id} name='menuItem' key={event.name} >
                     {event.name}
                 </a>
             );
