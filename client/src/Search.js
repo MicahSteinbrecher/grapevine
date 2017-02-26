@@ -19,7 +19,7 @@ const Search = React.createClass({
                     </button>
                 </div>
                 <div className="sixteen wide column">
-                    <Menu events={this.props.events} activeEventId={this.props.activeEventId} onMouseOver={this.props.onMouseOver} onMouseLeave={this.props.onMouseLeave}/>
+                    <Menu events={this.props.events} activeEventId={this.props.activeEventId} onMouseOver={this.props.onMouseOver} onMouseLeave={this.props.onMouseLeave} onMouseClick={this.props.onMouseClick} selectedEventId={this.props.selectedEventId}/>
                 </div>
             </div>
 

@@ -20,6 +20,7 @@ class App extends React.Component {
         this.onDrag = this.onDrag.bind(this);
         this.onMouseOver = this.onMouseOver.bind(this);
         this.onMouseLeave = this.onMouseLeave.bind(this);
+        this.onMouseClick = this.onMouseClick.bind(this);
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -43,6 +44,8 @@ class App extends React.Component {
             console.log(result);
             this.setState({
                 events: result.events,
+                selectedEventId: '',
+                activeEventId: ''
             })
         });
     }
@@ -74,12 +77,20 @@ class App extends React.Component {
         })
     }
 
+    onMouseClick(e) {
+        if (e.target.name=='menuItem') {
+            this.setState({
+                selectedEventId: e.target.id
+            })
+        }
+    }
+
     render() {
         return (
             <div>
                 <Map {...this.state} onDrag={this.onDrag} onMouseOver={this.onMouseOver} />
                 <Search {...this.state} search={this.search} onMouseOver={this.onMouseOver}
-                onMouseLeave={this.onMouseLeave} />
+                onMouseLeave={this.onMouseLeave} onMouseClick={this.onMouseClick}/>
             </div>
         );
     }

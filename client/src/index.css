@@ -20,6 +20,11 @@ body {
   max-height: 80vh;
 }
 
+#eventDisplay {
+  overflow: scroll;
+  max-height: 70vh;
+}
+
 #menuItem {
   height: 50px;
 }

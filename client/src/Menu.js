@@ -1,4 +1,5 @@
 import React from 'react';
+import EventDisplay from './EventDisplay';
 import './index.css';
 import './semantic-ui/semantic.min.css';
 
@@ -10,6 +11,7 @@ class Menu extends React.Component {
         // This binding is necessary to make `this` work in the callback
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
+        this.handleMouseClick = this.handleMouseClick.bind(this);
     }
 
     handleMouseOver(e) {
@@ -20,21 +22,43 @@ class Menu extends React.Component {
         this.props.onMouseLeave(e);
     }
 
+    handleMouseClick(e) {
+        this.props.onMouseClick(e);
+    }
+
     render() {
-        var menuItems = '';
-        if (this.props.hasOwnProperty("events")) {
-            menuItems = this.props.events.map((event) =>
-                <a className="item menuItem" id={event.id} name='menuItem' key={event.id}>
+        var menu = '';
+        var events = this.props.events;
+
+        if (this.props.selectedEventId) {
+            var event = '';
+            for (var i in events) {
+                if (events[i].id != this.props.selectedEventId) {
+                    event = events[i];
+                    break;
+                }
+            }
+            menu = <EventDisplay event={event}/>
+            console.log(event);
+        }
+        else if (this.props.hasOwnProperty("events")) {
+            var eventList = events.map((event) =>
+                <a className="item menuItem" id={event.id} name='menuItem' key={event.id} >
                     {event.name}
                 </a>
             );
+            menu =
+                <div className="ui inverted vertical menu" id="eventPanel"
+                    ref={(menu) => { menu = menu; }}
+                    onMouseOver={this.handleMouseOver}
+                    onMouseLeave={this.handleMouseLeave}
+                     onClick={this.handleMouseClick}>
+                    {eventList}
+                </div>
         }
         return (
-            <div className="ui inverted vertical menu" id="eventPanel"
-                 ref={(menu) => { menu = menu; }}
-                 onMouseOver={this.handleMouseOver}
-                 onMouseLeave={this.handleMouseLeave}>
-                {menuItems}
+            <div>
+            {menu}
             </div>
         );
     }
