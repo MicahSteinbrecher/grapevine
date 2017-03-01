@@ -42,8 +42,16 @@ class Menu extends React.Component {
             console.log(event);
         }
         else if (this.props.hasOwnProperty("events")) {
+
+            for (var i in events){
+                if (events[i].id == this.props.activeEventId) {
+                    events[i].class = "active item menuItem"
+                } else {
+                    events[i].class = "item menuItem"
+                }
+            }
             var eventList = events.map((event) =>
-                <a className="item menuItem" id={event.id} name='menuItem' key={event.name} >
+                <a className={event.class} id={event.id} name='menuItem' key={event.name} >
                     {event.name}
                 </a>
             );

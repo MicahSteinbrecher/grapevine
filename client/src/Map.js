@@ -11,8 +11,6 @@ class Map extends React.Component {
 
         // This binding is necessary to make `this` work in the callback
         this.handleDrag = this.handleDrag.bind(this);
-        //this.handleMouseOver = this.handleMouseOver.bind(this);
-       // this.handleClick = this.handleClick.bind(this);
 
     }
 
@@ -51,7 +49,8 @@ class Map extends React.Component {
                     lng={event.venue.location.longitude}
                     icon={icons[event.id]}
                     onMouseOver={ (e) => this.props.onMouseOver({event}) }
-                    onClick={ () => this.props.onClick({event}) } />
+                    onClick={ () => this.props.onClick({event}) }
+                    onMouseOut={ () => this.props.onMouseLeave() }/>
         );
 
             return (

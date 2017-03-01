@@ -68,7 +68,7 @@ class App extends React.Component {
     }
 
     onMouseOver(e) {
-        if (e.target.name=='menuItem' || e.target.name=='marker') {
+        if (e.target.name=='menuItem') {
             this.setState({
                 activeEventId: e.target.id
             });
@@ -76,15 +76,19 @@ class App extends React.Component {
     }
 
     onMarkerMouseOver(data) {
-        this.setState({
-            activeEventId: data.event.id
-        });
+        if (this.state.selectedEventId=='') {
+            this.setState({
+                activeEventId: data.event.id
+            });
+        }
     }
 
-    onMouseLeave(e) {
-        this.setState({
-            activeEventId: ''
-        })
+    onMouseLeave() {
+        if (this.state.selectedEventId=='') {
+            this.setState({
+                activeEventId: ''
+            })
+        }
     }
 
     onMouseClick(e) {
@@ -97,14 +101,15 @@ class App extends React.Component {
 
     onMarkerClick(data) {
         this.setState({
-            selectedEventId: data.event.id
+            selectedEventId: data.event.id,
+            activeEventId: data.event.id
         });
     }
 
     render() {
         return (
             <div>
-                <Map {...this.state} onDrag={this.onDrag} onMouseOver={this.onMarkerMouseOver} onClick={this.onMarkerClick} />
+                <Map {...this.state} onDrag={this.onDrag} onMouseOver={this.onMarkerMouseOver} onClick={this.onMarkerClick} onMouseLeave={this.onMouseLeave}/>
                 <Search {...this.state} search={this.search} onMouseOver={this.onMouseOver}
                 onMouseLeave={this.onMouseLeave} onMouseClick={this.onMouseClick}/>
             </div>
