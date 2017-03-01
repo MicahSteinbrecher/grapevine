@@ -21,6 +21,10 @@ class App extends React.Component {
         this.onMouseOver = this.onMouseOver.bind(this);
         this.onMouseLeave = this.onMouseLeave.bind(this);
         this.onMouseClick = this.onMouseClick.bind(this);
+        this.onMarkerMouseOver = this.onMarkerMouseOver.bind(this);
+        this.onMarkerClick = this.onMarkerClick.bind(this);
+
+
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -71,6 +75,12 @@ class App extends React.Component {
         }
     }
 
+    onMarkerMouseOver(data) {
+        this.setState({
+            activeEventId: data.event.id
+        });
+    }
+
     onMouseLeave(e) {
         this.setState({
             activeEventId: ''
@@ -85,10 +95,16 @@ class App extends React.Component {
         }
     }
 
+    onMarkerClick(data) {
+        this.setState({
+            selectedEventId: data.event.id
+        });
+    }
+
     render() {
         return (
             <div>
-                <Map {...this.state} onDrag={this.onDrag} onMouseOver={this.onMouseOver} />
+                <Map {...this.state} onDrag={this.onDrag} onMouseOver={this.onMarkerMouseOver} onClick={this.onMarkerClick} />
                 <Search {...this.state} search={this.search} onMouseOver={this.onMouseOver}
                 onMouseLeave={this.onMouseLeave} onMouseClick={this.onMouseClick}/>
             </div>

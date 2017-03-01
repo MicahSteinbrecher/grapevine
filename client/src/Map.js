@@ -8,9 +8,12 @@ class Map extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.props;
+
         // This binding is necessary to make `this` work in the callback
         this.handleDrag = this.handleDrag.bind(this);
         //this.handleMouseOver = this.handleMouseOver.bind(this);
+       // this.handleClick = this.handleClick.bind(this);
+
     }
 
     componentWillReceiveProps(nextProps){
@@ -27,13 +30,6 @@ class Map extends React.Component {
         }
         this.props.onDrag(location);
     }
-
-    // handleMouseOver(e) {
-    //     console.log(e);
-    //     if ('target' in e) {
-    //         this.props.onMouseOver(e);
-    //     }
-    // }
 
     render() {
         var events = this.props.events;
@@ -53,7 +49,9 @@ class Map extends React.Component {
                     id={event.id}
                     lat={event.venue.location.latitude}
                     lng={event.venue.location.longitude}
-                    icon={icons[event.id]} />
+                    icon={icons[event.id]}
+                    onMouseOver={ (e) => this.props.onMouseOver({event}) }
+                    onClick={ () => this.props.onClick({event}) } />
         );
 
             return (
@@ -65,7 +63,7 @@ class Map extends React.Component {
                 params={{v: '3.exp', key: 'AIzaSyCnRGJFJHYPNnAJcqRpcAHGjWotJZlKCE4'}}
                 ref={(map) => { this.map = map; }}
                 onDrag={this.handleDrag}>
-                {markers}
+                {markers }
             </Gmaps>
         );
     }
