@@ -16,7 +16,7 @@ const LoginControl = React.createClass({
     componentDidMount: function () {
         window.fbAsyncInit = function () {
             FB.init({
-                appId: '1846877582224824',
+                appId: '1831922003763473',
                 cookie: true,  // enable cookies to allow the server to access
                 // the session
                 xfbml: true,  // parse social plugins on this page

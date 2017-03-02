@@ -1,6 +1,7 @@
 var EventSearch = require("facebook-events-by-location-core");
 var utilities = require('./utilities')
-var app = require('express')();
+var express = require('express');
+var app = express();
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 app.set('trust proxy', true)
