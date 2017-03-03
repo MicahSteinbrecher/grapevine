@@ -4,6 +4,8 @@ var express = require('express');
 var app = express();
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
+var https = require('https');
+
 app.set('trust proxy', true)
 app.use(session({
     name: 'server-session-cookie-id',
@@ -36,6 +38,33 @@ app.get('/set/location', (req, res) => {
     }
 });
 
+app.get('/get/accessCode', (req, res) => {
+    https.get({
+        host: 'graph.facebook.com',
+        path: '/oauth/access_token?client_id=1831922003763473&client_secret=3fcad7e72bd53296360f07361ea19f3d&grant_type=client_credentials'
+    }, function(facebookRes) {
+        // explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
+        facebookRes.setEncoding('utf8');
+
+        // incrementally capture the incoming response body
+        var body = '';
+        facebookRes.on('data', function(d) {
+            body += d;
+        });
+
+        // do whatever we want with the response once it's done
+        facebookRes.on('end', function() {
+            var appCode = body.split('=')[1];
+            req.session.appCode = appCode;
+            return res.sendStatus(200);
+        });
+    }).on('error', function(err) {
+        // handle errors with the request itself
+        console.error('Error with the request');
+        return res.json({ error: 'failed to authorized', });
+    });
+});
+
 app.get('/get/events', (req, res) => {
     var dateConstraint = new Date();
     dateConstraint.setDate(dateConstraint.getDate()+7);
@@ -43,7 +72,7 @@ app.get('/get/events', (req, res) => {
     var es = new EventSearch({
         "lat": req.session.location.lat,
         "lng": req.session.location.lng,
-        'accessToken': req.query.accessToken,
+        'accessToken': req.session.appCode,
         'distance': '8000',
         'sort': 'time',
         'until': dateConstraint
@@ -57,10 +86,9 @@ app.get('/get/events', (req, res) => {
             });
     }).catch(function (error) {
         console.error(JSON.stringify(error));
-        res.json({
-            error: 'Missing required parameter `q`',
+        return res.json({
+            error: 'error getting events',
         });
-        return;
     });
 });
 

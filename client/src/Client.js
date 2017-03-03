@@ -20,6 +20,17 @@ export const SetLocation = (location, cb) => {
         .then(cb);
 }
 
+export const RequestAuthorization = (cb) => {
+    console.log('requesting authorization');
+    return fetch(`get/accessCode`, {
+        credentials: 'same-origin',
+        accept: 'application/json',
+    }).then(checkStatus)
+        .then(cb);
+}
+
+
+
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;

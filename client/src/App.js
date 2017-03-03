@@ -5,6 +5,8 @@ import Map from './Map.js';
 import Search from './Search.js';
 import {GetEvents} from './Client';
 import {SetLocation} from './Client';
+import {RequestAuthorization} from './Client';
+
 
 class App extends React.Component {
 
@@ -39,6 +41,9 @@ class App extends React.Component {
                 }, (result) => {
                     console.log('saved location');
                 });
+                RequestAuthorization(), () => {
+                    console.log('user authorized');
+                }
             });
         }
     }
