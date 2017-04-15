@@ -63,7 +63,7 @@ class App extends React.Component {
     }
 
     search() {
-        GetUserEvents({auth: this.props.auth}, (result) => {
+        GetEvents({auth: this.props.auth}, (result) => {
             console.log(result);
             this.setState({
                 events: result.events,
