@@ -74,6 +74,34 @@ app.get('/get/accessCode', (req, res) => {
     });
 });
 
+app.get('/get/userEvents', (req, res) => {
+    var path = '/'+ req.query.userId + '?fields=id,name,events&access_token='+req.query.accessToken;
+    https.get({
+        host: 'graph.facebook.com',
+        path: path
+    }, function(facebookRes) {
+        // explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
+        facebookRes.setEncoding('utf8');
+
+        // incrementally capture the incoming response body
+        var body = '';
+        facebookRes.on('data', function(d) {
+            body += d;
+        });
+
+        // do whatever we want with the response once it's done
+        facebookRes.on('end', function() {
+            var result = JSON.parse(body);
+            console.log(result);
+            return res.json({result: result});
+        });
+    }).on('error', function(err) {
+        // handle errors with the request itself
+        console.error('Error with the request');
+        return res.json({ error: 'failed to authorized', });
+    });
+});
+
 app.get('/get/events', (req, res) => {
     var dateConstraint = new Date();
     dateConstraint.setDate(dateConstraint.getDate()+7);

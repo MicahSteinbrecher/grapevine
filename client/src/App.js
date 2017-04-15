@@ -4,6 +4,7 @@ import Logo from './Logo.js';
 import Map from './Map.js';
 import Search from './Search.js';
 import {GetEvents} from './Client';
+import {GetUserEvents} from './Client';
 import {SetLocation} from './Client';
 import {RequestAuthorization} from './Client';
 import async from 'async';
@@ -62,7 +63,7 @@ class App extends React.Component {
     }
 
     search() {
-        GetEvents({auth: this.props.auth}, (result) => {
+        GetUserEvents({auth: this.props.auth}, (result) => {
             console.log(result);
             this.setState({
                 events: result.events,

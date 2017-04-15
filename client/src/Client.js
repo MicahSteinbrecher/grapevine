@@ -39,6 +39,16 @@ export const RequestAppId = (cb) => {
         .then(cb);
 }
 
+export const GetUserEvents = (data, cb) => {
+    console.log('getting user events');
+    return fetch(`get/userEvents?userId=${data.auth.userID}&accessToken=${data.auth.accessToken}`, {
+        credentials: 'same-origin',
+        accept: 'application/json',
+    }).then(checkStatus)
+        .then(parseJSON)
+        .then(cb);
+}
+
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
