@@ -1,1 +1,10 @@
-{}
+{
+  "production": {
+    "facebookAppId": "1831922003763473",
+    "facebookAppSecret": "3fcad7e72bd53296360f07361ea19f3d"
+  },
+  "development": {
+    "facebookAppId": "1846877582224824",
+    "facebookAppSecret": "d9c7a1fb1d03f03037f7fa405d442bb0"
+  }
+}

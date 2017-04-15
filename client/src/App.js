@@ -6,6 +6,7 @@ import Search from './Search.js';
 import {GetEvents} from './Client';
 import {SetLocation} from './Client';
 import {RequestAuthorization} from './Client';
+import async from 'async';
 
 
 class App extends React.Component {
@@ -35,15 +36,27 @@ class App extends React.Component {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                 });
-                SetLocation({
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                }, (result) => {
-                    console.log('saved location');
-                });
-                RequestAuthorization(), () => {
-                    console.log('user authorized');
-                }
+
+                async.series([
+                    function(callback) {
+                        SetLocation({
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude})
+                        .then(() => {callback(null, 'saved location')})
+                        .catch(() => {callback('error saving location')})
+                    },
+                    function(callback) {
+                        RequestAuthorization()
+                            .then(() => {
+                                callback(null, 'user authorized')
+                            })
+                            .catch(() => {
+                                callback('error authorizing user')
+                            })
+                    }],
+                    function(err, results) {
+                        console.log(results);
+                    });
             });
         }
     }

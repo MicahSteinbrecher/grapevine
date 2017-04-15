@@ -29,7 +29,15 @@ export const RequestAuthorization = (cb) => {
         .then(cb);
 }
 
-
+export const RequestAppId = (cb) => {
+    console.log('requesting app ID');
+    return fetch(`get/facebookAppId`, {
+        credentials: 'same-origin',
+        accept: 'application/json',
+    }).then(checkStatus)
+        .then(parseJSON)
+        .then(cb);
+}
 
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {

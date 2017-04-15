@@ -4,6 +4,8 @@ import React from 'react';
 import App from './App.js';
 import LoginButton from './LoginButton.js';
 import './index.css';
+import {RequestAppId} from './Client';
+
 
 
 
@@ -13,10 +15,18 @@ const LoginControl = React.createClass({
        return {authenticated: false};
     },
 
+    componentWillMount: function () {
+        RequestAppId((result) => {
+            console.log(result);
+            this.state.appId = result.facebookAppId
+        })
+    },
+
     componentDidMount: function () {
-        window.fbAsyncInit = function () {
+
+        window.fbAsyncInit = function (result) {
             FB.init({
-                appId: '1831922003763473',
+                appId: this.state.appId,
                 cookie: true,  // enable cookies to allow the server to access
                 // the session
                 xfbml: true,  // parse social plugins on this page

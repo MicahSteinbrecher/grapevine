@@ -5,6 +5,7 @@ var app = express();
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 var https = require('https');
+var config = require('./config.json');
 
 app.set('trust proxy', true)
 app.use(session({
@@ -38,10 +39,18 @@ app.get('/set/location', (req, res) => {
     }
 });
 
+app.get('/get/facebookAppId', (req, res) => {
+    var facebookAppId = config[app.get('env')].facebookAppId;
+    return res.json({
+        'facebookAppId': facebookAppId
+    });
+});
+
 app.get('/get/accessCode', (req, res) => {
+    console.log(config[app.get('env')]);
     https.get({
         host: 'graph.facebook.com',
-        path: '/oauth/access_token?client_id=1831922003763473&client_secret=3fcad7e72bd53296360f07361ea19f3d&grant_type=client_credentials'
+        path: '/oauth/access_token?client_id='+config[app.get('env')].facebookAppId+'&client_secret='+config[app.get('env')].facebookAppSecret+'&grant_type=client_credentials'
     }, function(facebookRes) {
         // explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
         facebookRes.setEncoding('utf8');
@@ -54,7 +63,7 @@ app.get('/get/accessCode', (req, res) => {
 
         // do whatever we want with the response once it's done
         facebookRes.on('end', function() {
-            var appCode = body.split('=')[1];
+            var appCode = body.split('"')[3];
             req.session.appCode = appCode;
             return res.sendStatus(200);
         });
