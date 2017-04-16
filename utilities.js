@@ -1,5 +1,6 @@
 function prepareResults(events) {
-    return removeDuplicateLocations(events);
+    events = removeDuplicateLocations(events);
+    return addEventDateTime(events);
 }
 
 function removeDuplicateLocations(events) {
@@ -13,7 +14,30 @@ function removeDuplicateLocations(events) {
             results.push(events[i]);
         }
     }
-    return {'results':results, 'events': results.length};
+    return results;
+}
+
+function addEventDateTime(events){
+    for (var i = 0; i < events.length; i++) {
+        console.log(i);
+        console.log(events[i]);
+        events[i].time = getEventDateTime(events[i].startTime, events[i].endTime);
+    }
+    return {'results': events, events: events.length}
+}
+
+function getEventDateTime(start, end){
+    start = start.split("T");
+    var startTime = start[1].split("-")[0];
+    var startDate = start[0];
+
+    if (end) {
+        end = end.split("T");
+        var endTime = end[1].split("-")[0];
+        return (startDate + ': ' + startTime + ' - ' + endTime);
+    } else {
+        return (startDate + ': ' + startTime);
+    }
 }
 
 class Location {

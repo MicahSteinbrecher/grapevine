@@ -105,17 +105,18 @@ app.get('/get/userEvents', (req, res) => {
 app.get('/get/events', (req, res) => {
     var dateConstraint = new Date();
     dateConstraint.setDate(dateConstraint.getDate()+7);
+    dateConstraint = Math.floor(dateConstraint.getTime() / 1000);
     console.log(dateConstraint);
     var es = new EventSearch({
         "lat": req.session.location.lat,
         "lng": req.session.location.lng,
         'accessToken': req.session.appCode,
-        'distance': '8000',
+        'distance': '15000',
         'sort': 'time',
+        'until': dateConstraint
     });
 
     es.search().then(function (events) {
-        console.log(JSON.stringify(events, null, 4));
         events = utilities.prepareResults(events.events);
         return res.json({
                 'events': events.results,
