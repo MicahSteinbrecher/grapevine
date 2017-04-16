@@ -112,7 +112,6 @@ app.get('/get/events', (req, res) => {
         'accessToken': req.session.appCode,
         'distance': '8000',
         'sort': 'time',
-        'until': dateConstraint
     });
 
     es.search().then(function (events) {
@@ -122,7 +121,7 @@ app.get('/get/events', (req, res) => {
                 'events': events.results,
             });
     }).catch(function (error) {
-        console.error(JSON.stringify(error));
+        console.error(error);
         return res.json({
             error: 'error getting events',
         });
