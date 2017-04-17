@@ -108,8 +108,8 @@ app.get('/get/events', (req, res) => {
     dateConstraint = Math.floor(dateConstraint.getTime() / 1000);
     console.log(dateConstraint);
     var es = new EventSearch({
-        "lat": req.session.location.lat,
-        "lng": req.session.location.lng,
+        "lat": req.query.lat || req.session.location.lat,
+        "lng": req.query.lng || req.session.location.lng,
         'accessToken': req.session.appCode,
         'distance': '15000',
         'sort': 'time',
