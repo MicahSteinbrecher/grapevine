@@ -59,7 +59,7 @@ class Map extends React.Component {
                 lat={this.state.lat}
                 lng={this.state.lng}
                 zoom={13}
-                params={{v: '3.exp', key: 'AIzaSyCnRGJFJHYPNnAJcqRpcAHGjWotJZlKCE4'}}
+                params={{v: '3.exp', key: 'AIzaSyDAP8TaK4JPkNgFDVqLLwogC3a8SG3t5r4'}}
                 ref={(map) => { this.map = map; }}
                 onDrag={this.handleDrag}>
                 {markers }
