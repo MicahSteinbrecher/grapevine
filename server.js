@@ -104,6 +104,13 @@ app.get('/get/userEvents', (req, res) => {
 
 app.get('/get/events', (req, res) => {
     var dateConstraint = new Date();
+    if (req.query.dateFilter == 'This Week') {
+        dateConstraint.setDate(dateConstraint.getDate()+7);
+    } else if (req.query.dateFilter == 'Tomorrow') {
+        dateConstraint.setDate(dateConstraint.getDate()+2);
+    } else if (req.query.dateFilter == 'Today') {
+        dateConstraint.setDate(dateConstraint.getDate()+1);
+    }
     dateConstraint.setDate(dateConstraint.getDate()+7);
     dateConstraint = Math.floor(dateConstraint.getTime() / 1000);
     console.log(dateConstraint);
