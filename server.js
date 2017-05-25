@@ -74,6 +74,34 @@ app.get('/get/accessCode', (req, res) => {
     });
 });
 
+app.get('/renew/accessCode', (req, res) => {
+    console.log(config[app.get('env')]);
+    https.get({
+        host: 'graph.facebook.com',
+        path: '/oauth/access_token?client_id='+config[app.get('env')].facebookAppId+'&client_secret='+config[app.get('env')].facebookAppSecret+'&grant_type=client_credentials'
+    }, function(facebookRes) {
+        // explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
+        facebookRes.setEncoding('utf8');
+
+        // incrementally capture the incoming response body
+        var body = '';
+        facebookRes.on('data', function(d) {
+            body += d;
+        });
+
+        // do whatever we want with the response once it's done
+        facebookRes.on('end', function() {
+            var appCode = body.split('"')[3];
+            req.session.appCode = appCode;
+            req.redirect('/get/events');
+        });
+    }).on('error', function(err) {
+        // handle errors with the request itself
+        console.error('Error with the request');
+        return res.json({ error: 'failed to authorized', });
+    });
+});
+
 app.get('/get/userEvents', (req, res) => {
     var path = '/'+ req.query.userId + '?fields=id,name,events&access_token='+req.query.accessToken;
     https.get({
@@ -129,6 +157,9 @@ app.get('/get/events', (req, res) => {
             });
     }).catch(function (error) {
         console.error(error);
+        if (error.code == 2){
+            req.redirect('/renew/accessCode');
+        }
         return res.json({
             error: 'error getting events',
         });
