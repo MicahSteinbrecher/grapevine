@@ -93,7 +93,7 @@ app.get('/renew/accessCode', (req, res) => {
         facebookRes.on('end', function() {
             var appCode = body.split('"')[3];
             req.session.appCode = appCode;
-            req.redirect('/get/events');
+            res.redirect('/get/events');
         });
     }).on('error', function(err) {
         // handle errors with the request itself
@@ -158,7 +158,7 @@ app.get('/get/events', (req, res) => {
     }).catch(function (error) {
         console.error(error);
         if (error.code == 2){
-            req.redirect('/renew/accessCode');
+            res.redirect('/renew/accessCode');
         }
         return res.json({
             error: 'error getting events',
