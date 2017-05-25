@@ -63,8 +63,8 @@ class App extends React.Component {
     }
 
     search() {
-        GetEvents({auth: this.props.auth}, (result) => {
-            console.log(result);
+        GetEvents((result) => {
+            console.log('search successful');
             this.setState({
                 events: result.events,
                 selectedEventId: '',
@@ -81,8 +81,6 @@ class App extends React.Component {
         SetLocation({
             lat: this.state.lat,
             lng: this.state.lng
-        }, (result) => {
-            console.log('saved location');
         });
     }
 

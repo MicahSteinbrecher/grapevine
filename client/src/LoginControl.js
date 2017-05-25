@@ -17,7 +17,6 @@ const LoginControl = React.createClass({
 
     componentWillMount: function () {
         RequestAppId((result) => {
-            console.log(result);
             this.state.appId = result.facebookAppId
         })
     },
@@ -59,8 +58,6 @@ const LoginControl = React.createClass({
 
     statusChangeCallback: function (response) {
         console.log('statusChangeCallback');
-        console.log(response);
-
         if (response.status === 'connected') {
             this.testAPI(response.authResponse);
         } else if (response.status === 'not_authorized') {

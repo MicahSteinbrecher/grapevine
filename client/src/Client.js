@@ -1,8 +1,7 @@
 /* eslint-disable no-undef */
-export const GetEvents = (data, cb) => {
+export const GetEvents = (cb) => {
     console.log('searching...');
-    console.log(data);
-    return fetch(`get/events?accessToken=${data.auth.accessToken}`, {
+    return fetch(`get/events`, {
         credentials: 'same-origin',
         accept: 'application/json',
     }).then(checkStatus)
@@ -11,8 +10,6 @@ export const GetEvents = (data, cb) => {
 }
 
 export const SetLocation = (location, cb) => {
-    console.log('setting location...');
-    console.log(location);
     return fetch(`set/location?lat=${location.lat}&lng=${location.lng}`, {
         credentials: 'same-origin',
         accept: 'application/json',

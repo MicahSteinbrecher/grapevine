@@ -39,7 +39,6 @@ class Menu extends React.Component {
                 }
             }
             menu = <EventDisplay event={event}/>
-            console.log(event);
         }
         else if (this.props.hasOwnProperty("events")) {
 
