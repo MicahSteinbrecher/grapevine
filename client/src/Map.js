@@ -43,12 +43,12 @@ class Map extends React.Component {
         }
 
         var markers = events.map((event, index) =>
-            <Marker key={index}
+            <Marker key={event.id}
                     id={event.id}
                     lat={event.venue.location.latitude}
                     lng={event.venue.location.longitude}
                     icon={icons[event.id]}
-                    onMouseOver={ (e) => this.props.onMouseOver({event}) }
+                    onMouseOver={ () => this.props.onMouseOver({event}) }
                     onClick={ () => this.props.onClick({event}) }
                     onMouseOut={ () => this.props.onMouseLeave() }/>
         );

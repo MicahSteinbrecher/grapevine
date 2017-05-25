@@ -11,19 +11,14 @@ const Search = React.createClass({
     },
     render: function () {
         return (
-            <div className="ui grid" id="searchContainer">
-                <div className="sixteen wide column ui input">
-                    <input type="text" placeholder="Search..." id="searchInput"/>
-                    <button className="ui icon button" id="search" onClick={this.handleClick}>
-                        <i className="search icon"></i>
-                    </button>
-                </div>
-                <div className="sixteen wide column">
+            <div>
+                <button className="ui icon button" id="search" onClick={this.handleClick}>
+                    <i className="search icon"></i>
+                </button>
+                <div className="ui grid" id="searchContainer">
                     <Menu events={this.props.events} activeEventId={this.props.activeEventId} onMouseOver={this.props.onMouseOver} onMouseLeave={this.props.onMouseLeave} onMouseClick={this.props.onMouseClick} selectedEventId={this.props.selectedEventId}/>
                 </div>
             </div>
-
-
         );
     },
 });

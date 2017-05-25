@@ -6,12 +6,16 @@ body {
 
 #searchContainer {
   position: absolute;
-  top: 50px;
+  top: 80px;
   width: 330px;
 }
 
 #search {
-  background: white;
+  background-color: white;
+  position: absolute;
+  top: 10px;
+  left: 120px;
+  width: 180px;
 }
 
 #eventPanel {
